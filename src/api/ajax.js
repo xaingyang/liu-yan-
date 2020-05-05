@@ -9,7 +9,7 @@ const instance = axios.create({
     timeout:15000,
 })
 
-inatance.interceptors.request.use(
+instance.interceptors.request.use(
     config=>{
       NProgress.start()
       return config
@@ -29,3 +29,5 @@ instance.interceptors.response.use(
         return Promise.reject(error)
     }
 )
+
+export default instance
