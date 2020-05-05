@@ -12,6 +12,11 @@ import Footer from "@/components/Footer";
 
 export default {
   name: "App",
+
+  async mounted(){
+    console.log(this.$store.state)
+  },
+
   components: {
     Header,
     Footer,
