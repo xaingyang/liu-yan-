@@ -13,8 +13,11 @@ import Footer from "@/components/Footer";
 export default {
   name: "App",
 
-  async mounted(){
-    console.log(this.$store.state)
+  async mounted () {
+    const result = await reqFloors()
+    console.log('mock result ', result)
+    
+    this.$store.dispatch('getBaseCategoryList')
   },
 
   components: {
