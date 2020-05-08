@@ -1,9 +1,9 @@
-export default {
-    state:{
-        userInfo:{},
-        x:''
-    },
-    mutations:{},
-    actions:{},
-    getters:{}
+export default  {
+  state: {
+    userInfo: {},
+    x: ''
+  },
+  mutations: {},
+  actions: {},
+  getters: {},
 }

@@ -3,24 +3,25 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <!-- <div class="swiper-container" id="swiper"> -->
+        <div class="swiper-container" ref="swiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div class="swiper-slide" v-for="banner in banners" :key="banner.id">
+                <img :src="banner.imgUrl" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
-
+          
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-        </div>
+      </div>
       </div>
       <div class="right">
         <div class="news">
           <h4>
-            <em class="fl">尚品汇快报</em>
+            <em class="fl" ref="msg" @click="updateMsg">{{msg}}</em>
             <span class="fr tip">更多 ></span>
           </h4>
           <div class="clearix"></div>
@@ -101,9 +102,68 @@
 </template>
 
 <script>
-export default {
-   name:''
-}
+  import { mapState } from 'vuex'
+  import Swiper from 'swiper'
+  import 'swiper/css/swiper.min.css'
+
+  export default {
+    name: 'ListContainer',
+
+    data () {
+      return {
+        msg: 'atguigu',
+      }
+    },
+
+    computed: {
+      ...mapState({
+        banners: state => state.home.banners   
+      })
+    },
+
+    watch: {
+      banners (value) {
+          console.log('watch banners', value.length)
+    
+          this.$nextTick(() => {
+                  this.initSwiper()
+        })
+      },
+
+      msg () {
+          console.log('watch msg', this.$refs.msg.innerHTML)
+      }
+    },
+
+    mounted () {
+    },
+
+    methods: {
+    
+      initSwiper() {
+        
+        new Swiper (this.$refs.swiper, {
+        
+          loop: true, 
+          
+          pagination: {
+            el: '.swiper-pagination',
+          },
+          
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        })  
+      },
+
+      updateMsg () {
+        this.msg = 'baidu' 
+        console.log('updateMsg', this.$refs.msg.innerHTML)
+      },
+    }
+    
+  }
 </script>
 
 <style lang="less" scoped>

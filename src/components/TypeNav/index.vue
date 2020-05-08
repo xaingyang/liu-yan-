@@ -12,16 +12,22 @@
                 :class="{item_on: index===currentIndex}" @mouseenter="showSubCategorys(index)">
                 <h3>
                   <a href="javascript:" :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId">{{c1.categoryName}}</a>
+                  <!-- <a href="javascript:" @click="$router.push(`/search?categoryName=${c1.categoryName}&category1Id=${c1.categoryId}`)">{{c1.categoryName}}</a> -->
+                  <!-- <router-link :to="`/search?categoryName=${c1.categoryName}&category1Id=${c1.categoryId}`">{{c1.categoryName}}</router-link> -->
                 </h3>
                 <div class="item-list clearfix">
                   <div class="subitem">
                     <dl class="fore" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                       <dt>
                         <a href="javascript:" :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{c2.categoryName}}</a>
+                        <!-- <a href="javascript:" @click="$router.push(`/search?categoryName=${c2.categoryName}&category2Id=${c2.categoryId}`)">{{c2.categoryName}}</a> -->
+                        <!-- <router-link :to="`/search?categoryName=${c2.categoryName}&category2Id=${c2.categoryId}`">{{c2.categoryName}}</router-link> -->
                       </dt>
                       <dd>
                         <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
                           <a href="javascript:" :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{c3.categoryName}}</a>
+                          <!-- <a href="javascript:" @click="$router.push(`/search?categoryName=${c3.categoryName}&category3Id=${c3.categoryId}`)">{{c3.categoryName}}</a> -->
+                          <!-- <router-link :to="`/search?categoryName=${c3.categoryName}&category3Id=${c3.categoryId}`">{{c3.categoryName}}</router-link> -->
                         </em>
                       </dd>
                     </dl>
@@ -50,6 +56,7 @@
 <script>
   import throttle from 'lodash/throttle'  
   import { mapState } from 'vuex'
+
   export default {
     name: 'TypeNav',
 
@@ -60,8 +67,8 @@
       }
     },
 
-
     computed: {
+      
       
       ...mapState({
         categoryList: state => state.home.baseCategoryList
@@ -69,12 +76,10 @@
     },
 
     beforeMount () {
-       this.isShowFirst = this.$route.path==='/'
+      this.isShowFirst = this.$route.path==='/'
     },
 
-
     methods: {
-
       showCategorys () {
         this.currentIndex=-1
         this.isShowFirst = true
@@ -82,22 +87,25 @@
 
       hideCategorys () {
         this.currentIndex=-2
+        
         if (this.$route.path!=='/') {
           this.isShowFirst = false
         }
       },
 
-      
       showSubCategorys: throttle(function (index) {
+        
         if (this.currentIndex===-2) return 
+        
         this.currentIndex = index
+        
       }, 300),
 
-      
       toSearch (event) {
         const { categoryname, category1id, category2id, category3id } = event.target.dataset
-        
+       
         if (categoryname) { 
+          
           const query = {categoryName: categoryname}
           if (category1id) {
             query.category1Id = category1id
@@ -118,6 +126,7 @@
           }
 
           this.$router.push(location)
+
           this.hideCategorys()
         }
       }

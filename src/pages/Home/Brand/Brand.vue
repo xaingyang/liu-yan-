@@ -38,9 +38,9 @@
 </template>
 
 <script>
-export default {
-   name:'Brand'
-}
+  export default {
+    name: 'Brand',
+  }
 </script>
 
 <style lang="less" scoped>

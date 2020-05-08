@@ -1,13 +1,12 @@
 import axios from 'axios'
-
 import NProgress from 'nprogress' 
 import 'nprogress/nprogress.css' 
 
 NProgress.configure({ showSpinner: false }) 
 
 const instance = axios.create({
- 
-  baseURL: '/api', 
+
+  baseURL: '/mock', 
   timeout: 15000, 
 })
 
@@ -27,6 +26,7 @@ instance.interceptors.response.use(
   },
   error => {
     console.log('响应拦截器失败回调执行')
+
     NProgress.done()
 
     alert(`请求出错: ${error.message || '未知错误'}`)

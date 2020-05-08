@@ -26,9 +26,9 @@
 </template>
 
 <script>
-export default {
-    name:'TodayRecommend'
-}
+  export default {
+    name: 'TodayRecommend',
+  }
 </script>
 
 <style lang="less" scoped>
