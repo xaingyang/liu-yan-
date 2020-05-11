@@ -1,12 +1,10 @@
-import Mock from "mockjs";
-import banners from "./banners.json";
-import floors from "./floors.json";
+import Mock from "mockjs"
 
-//轮播图数据
-Mock.mock("/mock/banners", { code: 200, data: banners });
+import banners from './banners.json' 
+import floors from './floors.json'  
 
-//楼层数据
-Mock.mock("/mock/floors", { code: 200, data: floors });
+Mock.mock('/mock/banners', {code: 200, data: banners})
 
-// 当前模块不需要向外暴露什么东西, 只需要被加载运行一次, mock接口就可以访问了
+Mock.mock('/mock/floors', {code: 200, data: floors})
+
 console.log('mockServer.....')

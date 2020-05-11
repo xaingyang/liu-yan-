@@ -15,52 +15,51 @@
 </template>
 
 <script>
-import Swiper from "swiper";
-export default {
-  name: "Carousel",
-  props: {
-    carouselList: Array,
-  },
-  mounted() {
-    if (this.carouselList.length > 0) {
-      this.initSwiper();
-    }
-  },
+  import Swiper from 'swiper' 
 
-  watch: {
-    carouselList(value) {
-      console.log("watch carouselList", value.length);
-      if (value.length > 0) {
-        this.$nextTick(() => {
-          this.initSwiper();
-        });
+  export default {
+    name: 'Carousel',
+    props: { 
+      carouselList: Array
+    },
+
+    mounted () { 
+      if (this.carouselList.length>0) { 
+        this.initSwiper()
       }
     },
-  },
+  
+    watch: {
+      
+      carouselList(value) { 
+        console.log('watch carouselList', value.length)
 
-  methods: {
-    initSwiper() {
-      // new Swiper ('.swiper-container', {
-      // new Swiper ('#swiper', {
-      new Swiper(this.$refs.swiper, {
-        // direction: 'horizontal', // 水平切换
-
-        loop: true, // 循环模式选项
-
-        // 如果需要分页器
-        pagination: {
-          el: ".swiper-pagination",
-        },
-
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
+        if (value.length>0) {
+          this.$nextTick(() => {
+            this.initSwiper()
+          })
+        }
+      }
     },
-  },
-};
+
+    methods: {
+      initSwiper() {
+        new Swiper(this.$refs.swiper, {
+          loop: true, 
+          pagination: {
+            el: '.swiper-pagination',
+          },
+
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }
+        })
+      }
+    }
+  }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+
+</style>

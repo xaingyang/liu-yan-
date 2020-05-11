@@ -1,39 +1,30 @@
 <template>
   <div>
-    <Header />
+    <Header/>
     <router-view></router-view>
-    <Footer v-show="!$route.meta.isHideFooter" />
+    <Footer v-show="!$route.meta.isHideFooter"/>
   </div>
 </template>
 
 <script>
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-// import { reqBaseCategoryList, reqLogin } from "@/api";
-import { reqFloors } from "@/api";
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+// import {reqBaseCategoryList, reqLogin} from '@/api'
+import { reqFloors } from '@/api'
 
 export default {
-  name: "App",
+  name: 'App',
+  async mounted () {
+    this.$store.dispatch('getBaseCategoryList')
+  },
 
   components: {
     Header,
-    Footer,
-  },
-  async mounted() {
-    // const result = await reqBaseCategoryList();
-    // console.log("result", result);
-    // const result2 = await reqLogin("13700000000", "111111");
-    // console.log("result2", result2);
-
-    this.$store.dispatch("getBaseCategoryList");
-
-    //mock测试
-    // const result = await reqFloors();
-    // console.log("mock result ", result);
-
-    
-  },
-};
+    Footer
+  }
+}
 </script>
 
-<style lang="less" scoped></style>
+<style scoped>
+
+</style>
