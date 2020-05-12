@@ -1,9 +1,11 @@
-export default  {
+import { reqLogin } from "@/api";
+
+export default {
   state: {
-    userInfo: {},
-    x: ''
+    suerInfo: {},
+    y: "",
   },
   mutations: {},
   actions: {},
   getters: {},
-}
+};
