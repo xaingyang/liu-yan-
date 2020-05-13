@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h2>Login</h2>
-  </div>
+  <div>Login</div>
 </template>
 
 <script>
 export default {
-  name: "",
-};
+  name: 'Login',
+}
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+
+</style>

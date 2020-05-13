@@ -1,39 +1,49 @@
-import { reqProductList } from "@/api";
+/* 
+管理搜索模块相关数据的vuex模块
+*/
+import {reqProductList} from '@/api'
 
 const state = {
-  productList: {},
-};
+  productList: {}, 
+}
 
 const mutations = {
-  RECEIVE_PRODUCT_LIST(state, productList) {
-    state.productList = productList;
-  },
-};
-
+  /* 
+  接收保存新的商品列表数据
+  */
+  RECEIVE_PRODUCT_LIST (state, productList) {
+    state.productList = productList
+  }
+}
 const actions = {
-  async getProductList({ commit }, searchParams) {
-    const result = await reqProductList(searchParams);
-    if (result.code === 200) {
-      const productList = result.data;
-      commit("RECEIVE_PRODUCT_LIST", productList);
+  /* 
+  获取商品列表数据的异步action
+  */
+  async getProductList ({commit}, searchParams) {
+    searchParams = {...searchParams}
+    Object.keys(searchParams).forEach(key => {
+      if (searchParams[key]==='') {
+        delete searchParams[key]
+      }
+    })
+    const result = await reqProductList(searchParams)
+    if (result.code===200) {
+      const productList = result.data
+      commit('RECEIVE_PRODUCT_LIST', productList)
     }
-  },
-};
-
+  }
+}
 const getters = {
-  trademarkList(state) {
-    // 当前模块的state
-    return state.productList.trademarkList || [];
+  trademarkList (state) { 
+    return state.productList.trademarkList || []
   },
-
-  attrsList(state) {
-    return state.productList.attrsList || [];
-  },
-};
-
+  attrsList (state) {
+    return state.productList.attrsList || []
+  }
+}
 export default {
   state,
   mutations,
   actions,
-  getters,
-};
+  getters
+}

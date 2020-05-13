@@ -13,54 +13,58 @@
     <div class="swiper-button-next"></div>
   </div>
 </template>
-
 <script>
-import Swiper from "swiper";
-export default {
-  name: "Carousel",
-  props: {
-    carouselList: Array,
-  },
-  mounted() {
-    if (this.carouselList.length > 0) {
-      this.initSwiper();
-    }
-  },
+  import Swiper from 'swiper' 
 
-  watch: {
-    carouselList(value) {
-      console.log("watch carouselList", value.length);
-      if (value.length > 0) {
-        this.$nextTick(() => {
-          this.initSwiper();
-        });
+  export default {
+    name: 'Carousel',
+    
+    props: { 
+      carouselList: Array
+    },
+
+    mounted () { 
+      if (this.carouselList.length>0) { 
+        this.initSwiper()
       }
     },
-  },
-
-  methods: {
-    initSwiper() {
-      // new Swiper ('.swiper-container', {
-      // new Swiper ('#swiper', {
-      new Swiper(this.$refs.swiper, {
-        // direction: 'horizontal', // 水平切换
-
-        loop: true, // 循环模式选项
-
-        // 如果需要分页器
-        pagination: {
-          el: ".swiper-pagination",
-        },
-
-        // 如果需要前进后退按钮
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      });
+    watch: {
+      // banners通过此方式创建的swiper
+      carouselList(value) { 
+        console.log('watch carouselList', value.length)
+        // 如果有数据才去创建延迟swiper
+        if (value.length>0) {
+          this.$nextTick(() => {
+            this.initSwiper()
+          })
+        }
+      }
     },
-  },
-};
+
+    methods: {
+      /* 
+      创建swiper实例对象: 必须在列表数据显示之后创建才有正常轮播效果
+      */
+      initSwiper() {
+        new Swiper(this.$refs.swiper, {
+         loop: true, // 循环模式选项
+
+          // 如果需要分页器
+          pagination: {
+            el: '.swiper-pagination',
+          },
+
+          // 如果需要前进后退按钮
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          }
+        })
+      }
+    }
+  }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+
+</style>

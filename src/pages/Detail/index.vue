@@ -1,16 +1,13 @@
 <template>
   <div class="detail">
-    <!-- 商品分类导航 -->
     <TypeNav />
-
-    <!-- 主要内容区域 -->
     <section class="con">
-      <!-- 导航路径区域 -->
       <div class="conPoin">
         <span>{{ categoryView.category1Name }}</span>
         <span>{{ categoryView.category2Name }}</span>
         <span>{{ categoryView.category3Name }}</span>
       </div>
+
       <!-- 主要内容区域 -->
       <div class="mainCon">
         <!-- 左侧放大镜区域 -->
@@ -22,17 +19,13 @@
             :imgUrl="skuImageList[currentIndex].imgUrl"
           />
           <!-- 小图列表 -->
-          <ImageList @changeCurrent="handleCurrentChange" />
+          <ImageList @currentChange="handleCurrentChange" />
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
           <div class="goodsDetail">
-            <h3 class="InfoName">
-              {{ skuInfo.skuName }}
-            </h3>
-            <p class="news">
-              {{ skuInfo.skuDesc }}
-            </p>
+            <h3 class="InfoName">{{ skuInfo.skuName }}</h3>
+            <p class="news">{{ skuInfo.skuDesc }}</p>
             <div class="priceArea">
               <div class="priceArea1">
                 <div class="title">
@@ -79,25 +72,23 @@
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
-              <dl v-for="(attr, index) in spuSaleAttrList" :key="index">
-                <dt class="title">
-                  {{ attr.saleAttrName }}
-                </dt>
+              <dl v-for="(attr, index) in spuSaleAttrList" :key="attr.id">
+                <dt class="title">{{ attr.saleAttrName }}</dt>
                 <dd
-                  changepirce="0"
-                  v-for="(item, index) in attr.spuSaleAttrValueList"
-                  :key="index"
-                  :class="{ active: +item.isChecked }"
-                  @click="changeChecked(item, attr.spuSaleAttrValueList)"
+                  v-for="(value, index) in attr.spuSaleAttrValueList"
+                  :key="value.id"
+                  :class="{ active: value.isChecked === '1' }"
+                  @click="selectValue(value, attr.spuSaleAttrValueList)"
                 >
-                  {{ item.saleAttrValueName }}
+                  {{ value.saleAttrValueName }}
                 </dd>
               </dl>
             </div>
+
             <div class="cartWrap">
               <div class="controls">
                 <input autocomplete="off" class="itxt" v-model="skuNum" />
-                <a href="javascript:" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:" class="plus" @click="skuNum += 1">+</a>
                 <a
                   href="javascript:"
                   class="mins"
@@ -357,27 +348,18 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 import ImageList from "./ImageList/ImageList";
 import Zoom from "./Zoom/Zoom";
-import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Detail",
-  components: {
-    ImageList,
-    Zoom,
-  },
 
   data() {
     return {
       currentIndex: 0,
-      //添加购物车数量
       skuNum: 1,
     };
-  },
-
-  mounted() {
-    this.$store.dispatch("getDetailInfo", this.$route.params.skuId);
   },
 
   computed: {
@@ -391,62 +373,63 @@ export default {
       "spuSaleAttrList",
     ]),
   },
-
+  mounted() {
+    this.$store.dispatch("getDetailInfo", this.$route.params.skuId);
+  },
   methods: {
-    handleCurrentChange(index) {
-      this.currentIndex = index;
-    },
-
-    //改变销售选项
-    changeChecked(item, attrs) {
-      attrs.forEach((value) => {
-        value.isChecked = 0;
-      });
-      item.isChecked = 1;
-    },
-
     async addToCart() {
       // 取出商品的id与数量
       const skuId = this.$route.params.skuId;
       const skuNum = this.skuNum;
-      /*  this.$store.dispatch("addToCart", {
-        skuId,
-        skuNum,
-        callback: this.callback,
-      }); */
-
-      //实现方式2: 利用dispatch()的promise返回值
-      /* const errorMsg = await this.$store.dispatch("addToCart2", {
-        skuId,
-        skuNum,
-      });
-      if (errorMsg) {
-        // 如果有值, 说明添加失败了
-        alert(errorMsg);
-      } else {
-        alert("添加成功, 准备自动跳转到成功的界面");
-      } */
-
-      //实现方式2.2: 利用dispatch()的promise返回值
       try {
-        await this.$store.dispatch("addToCart3", {
-          skuId,
-          skuNum,
+        await this.$store.dispatch("addToCart3", { skuId, skuNum });
+        // 向sessionStorage中保存skuInfo
+        window.sessionStorage.setItem(
+          "SKU_INFO_KEY",
+          JSON.stringify(this.skuInfo)
+        );
+        // 跳转到添加成功的界面
+        this.$router.push({
+          path: "/addcartsuccess",
+          query: { skuNum },
         });
-        alert("添加成功, 准备自动跳转到成功的界面");
       } catch (error) {
         alert(error.message);
       }
     },
-
+    /* 
+      当异步action结束时自动调用的回调函数
+      */
     callback(errorMsg) {
       if (errorMsg) {
-        // 如果有值, 说明添加失败了
         alert(errorMsg);
       } else {
         alert("添加成功, 准备自动跳转到成功的界面");
       }
     },
+
+    /* 
+      当前图片下标发生改变的监听回调函数
+      */
+    handleCurrentChange(index) {
+      this.currentIndex = index;
+    },
+
+    /* 
+      选择某个属性值
+      */
+    selectValue(value, valueList) {
+      // 如果当前项没有选中才处理
+      if (value.isChecked !== "1") {
+        valueList.forEach((v) => (v.isChecked = "0"));
+        value.isChecked = "1";
+      }
+    },
+  },
+
+  components: {
+    ImageList,
+    Zoom,
   },
 };
 </script>

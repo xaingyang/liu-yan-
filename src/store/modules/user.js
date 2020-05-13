@@ -1,11 +1,11 @@
-import { reqLogin } from "@/api";
+import { getUserTempId } from '@/utils'
 
-export default {
+export default  {
   state: {
-    suerInfo: {},
-    y: "",
+    userInfo: {},
+    userTempId: getUserTempId()  
   },
   mutations: {},
   actions: {},
   getters: {},
-};
+}

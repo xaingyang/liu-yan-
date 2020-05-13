@@ -1,45 +1,51 @@
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Search from "@/pages/Search";
-import Detail from "@/pages/Detail";
+import Home from '@/pages/Home'
+import Search from '@/pages/Search'
+import Detail from '@/pages/Detail'
+import AddCartSuccess from '@/pages/AddCartSuccess'
+import ShopCart from '@/pages/ShopCart'
+
+
+import Register from '@/pages/Register'
+import Login from '@/pages/Login'
 
 export default [
-  //home
   {
-    path: "/",
-    component: Home,
+    path: '/',
+    component: Home
   },
-  //登录
   {
-    path: "/login",
-    component: Login,
-    meta: {
-      isHideFooter: true,
-    },
+    name: 'search',  
+    path: '/search/:keyword?',
+    component: Search,
+    // 将params参数和query参数映射成属性传入路由组件
+    props: route => ({keyword3: route.params.keyword, keyword4: route.query.keyword2})
   },
-  //详情
   {
-    name: "detail",
-    path: "/detail/:skuId",
+    name: 'detail',  // 是当前路由的标识名称
+    path: '/detail/:skuId',
     component: Detail,
   },
-  //注册
   {
-    path: "/register",
+    path: '/addcartsuccess',
+    component: AddCartSuccess,
+  },
+  {
+    path: '/shopcart',
+    component: ShopCart,
+  },
+
+  {
+    path: '/register',
     component: Register,
     meta: {
-      isHideFooter: true,
-    },
+      isHideFooter: true
+    }
   },
-  //搜索
   {
-    name: "search",
-    path: "/search/:keyword?",
-    component: Search,
-    props: (route) => ({
-      keyword3: route.params.keyword,
-      keyword4: route.query.keyword2,
-    }),
+    path: '/login',
+    component: Login,
+    meta: {
+      isHideFooter: true
+    }
   },
-];
+]
