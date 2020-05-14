@@ -1,4 +1,5 @@
 <template>
+  <!--列表-->
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
@@ -21,51 +22,51 @@
           </ul>
         </div>
         <ul class="lifeservices">
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">话费</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">机票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">电影票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">游戏</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">彩票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">加油站</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">酒店</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">火车票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">众筹</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">理财</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">礼品卡</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">白条</span>
           </li>
@@ -80,26 +81,25 @@
 
 <script>
 import { mapState } from "vuex";
-
 export default {
   name: "ListContainer",
-
+  // mounted() {
+  //   this.initSwiper();
+  // },
   data() {
     return {
       msg: "atguigu",
     };
   },
-
-  computed: {
-    ...mapState({
-      banners: (state) => state.home.banners, 
-    }),
-  },
-
   watch: {
     msg() {
       console.log("watch msg", this.$refs.msg.innerHTML);
     },
+  },
+  computed: {
+    ...mapState({
+      banners: (state) => state.home.banners,
+    }),
   },
   methods: {
     updateMsg() {
@@ -181,7 +181,7 @@ export default {
           width: 25%;
 
           .list-item {
-            background-image: url(../images/icons.png);
+            background-image: url(../../../assets/images/icons.png);
             width: 61px;
             height: 40px;
             display: block;

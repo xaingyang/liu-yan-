@@ -8,7 +8,9 @@
             <img :src="skuInfo.skuDefaultImg" />
           </div>
           <div class="right-info">
-            <p class="title">{{ skuInfo.skuName }}</p>
+            <p class="title">
+              {{ skuInfo.skuName }}
+            </p>
             <p class="attr">
               颜色：WFZ5099IH/5L钛金釜内胆 数量：{{ $route.query.skuNum }}
             </p>
@@ -36,11 +38,8 @@ export default {
       skuInfo: {},
     };
   },
-  /* 
-    做一些同步操作后更新data数据
-    */
+
   beforeMount() {
-    // 从sessionStorage中读取前面保存的skuInfo
     this.skuInfo = JSON.parse(window.sessionStorage.getItem("SKU_INFO_KEY"));
   },
 };
